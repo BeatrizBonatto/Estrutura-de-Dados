@@ -14,28 +14,22 @@ struct node* cria_lista(int numero) {
   return n;
 };
 
-void adicionar(no* inicio, no* fim, int numero) {
-  struct node* n = cria_lista(numero);
-  //inicio e fim apontam igual se == NULL
-  if(inicio == NULL && fim == NULL) {
-    n -> numero = numero;
-    inicio = fim = n;
-  }
-  fim = n;
+void adicionar(no** inicio, no** fim, int numero) {
+    struct node* n = cria_lista(numero);
+    if (*inicio == NULL && *fim == NULL) {
+        *inicio = *fim = n;
+    } else {
+        (*fim)->prox = n;
+        *fim = n; // Atualiza o ponteiro para o último elemento
+    }
 }
 
-/*void excluir(struct node* n) {
-  struct node* lixo = n->prox;
+void excluir(no* fim) {
+  struct node* lixo = fim->prox;
   
-  n->prox = lixo->prox;
+  fim->prox = lixo->prox;
   free(lixo);
-}*/
-
-/*void imprimir(struct node* n) {
-  for(n = n-> prox ;n !=NULL ;n = n-> prox){
-    printf("%d \n", *n);
-  }
-}*/
+}
 
 int main() {
   no* inicio;
@@ -43,11 +37,11 @@ int main() {
   inicio = fim = NULL;
   
  
-  adicionar(inicio, fim, 5);
-  adicionar(inicio, fim, 7);
-  adicionar(inicio,fim, 15);
-  /*imprimir(n);
-  excluir(n);
-  printf("\n");*/
-  //imprimir(n);
+  adicionar(&inicio, &fim, 5);
+  adicionar(&inicio, &fim, 7);
+  adicionar(&inicio, &fim, 15);
+ // imprimir(inicio, fim);
+  excluir(fim);
+  printf("\n");
+  //imprimir(inicio, fim);
 }
