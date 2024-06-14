@@ -14,8 +14,7 @@ no *cria_lista(int numero){
   return n;
 };
 
-void adicionar(no **inicio, no **fim, int numero)
-{
+void adicionar(no **inicio, no **fim, int numero) {
   no *n = cria_lista(numero);
   if (*inicio == NULL && *fim == NULL){
     *inicio = n;
@@ -27,10 +26,10 @@ void adicionar(no **inicio, no **fim, int numero)
   }
 }
 
-void excluir(no** inicio, no** fim) {
+int excluir(no** inicio, no** fim) {
     if (*inicio == NULL) {
         // Lista vazia
-        printf("Lista esta vazia\n");
+        printf("\nLista esta vazia\n");
         return;
     }
     if (*inicio == *fim) {
@@ -39,17 +38,14 @@ void excluir(no** inicio, no** fim) {
         *inicio = *fim = NULL;
         return;
     }
-    // Percorre a lista até o penúltimo nó
+    // Remove o primeiro nó
     no* temp = *inicio;
-    while (temp->prox != *fim) {
-        temp = temp->prox;
-    }
-    // Remove o último nó
-    free(*fim);
-    *fim = temp;
-    (*fim)->prox=NULL;
+    temp = temp->prox;
+    free(*inicio);
+    *inicio = temp;
 
-    printf("\nResultado\nI>-%d F->%d\n", (*inicio)->numero, (*fim)->numero);
+    printf("\nResultado\nI -> %d F -> %d\n", (*inicio)->numero, (*fim)->numero);
+    return (*inicio)->numero;
 }
 
 void imprime(no **inicio, no **fim) {
@@ -71,26 +67,27 @@ int main() {
 
   //imprimir lista com todos os itens
   imprime (&inicio, &fim);
+
   //print meu inicio e fim salvos
-  printf("\nResultado\nI>-%d F->%d\n", inicio->numero, fim->numero);
+  printf("\nValores iniciais\nI -> %d F -> %d\n", inicio->numero, fim->numero);
 
   //excluir 15 da lista
   excluir(&inicio, &fim);
-  //imprimir lista
+
   imprime (&inicio, &fim);
 
   //excluir 7 da lista
   excluir(&inicio, &fim);
-  //imprimir lista
+
   imprime (&inicio, &fim);
 
-  //excluir 7 da lista
+  //excluir 5 da lista
   excluir(&inicio, &fim);
-  //imprimir lista
+
   imprime (&inicio, &fim);
 
-  //excluir 7 da lista
+  //tenta excluir, mas lista esta vazia
   excluir(&inicio, &fim);
-  //imprimir lista
+  //imprimir mensagem de lista vazia
   imprime (&inicio, &fim);
 }
